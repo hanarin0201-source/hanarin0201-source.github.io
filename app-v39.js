@@ -1,6 +1,5 @@
 (()=>{
 // v39: Galaxy login input stability + clearer gender distinction in member/queue views.
-
 function loginInputCommon39(el){
   if(!el)return;
   el.setAttribute('autocapitalize','off');
@@ -22,12 +21,11 @@ startLogin=async function(){
   try{
     const x=await request('login_probe','POST',{name});pendingLoginName=name;
     const box=$('loginBox');if(!box)return;
-    box.innerHTML=`<h2>${esc(x.roleLabel||'PIN')} 인증</h2><div class="authName">${esc(name)}</div><div class="field"><label>PIN</label><input id="loginPin" class="pinInput39" type="tel" inputmode="numeric" pattern="[0-9]*" maxlength="8" autocomplete="one-time-code" enterkeyhint="done" placeholder="PIN 입력"></div><button class="btn pri" style="width:100%" onclick="submitLogin()">로그인</button><div id="loginErr" class="error"></div><button class="btn ghost" style="width:100%;margin-top:8px" onclick="renderLoginName()">← 이름 다시 입력</button><div class="meta loginTapHint39">키패드가 바로 열리지 않으면 PIN 입력칸을 한 번 눌러주세요.</div>`;
+    box.innerHTML=`<h2>${esc(x.roleLabel||'PIN')} 인증</h2><div class="authName">${esc(name)}</div><div class="field"><label>PIN</label><input id="loginPin" class="pinInput39" type="tel" inputmode="numeric" pattern="[0-9]*" maxlength="8" autocomplete="off" enterkeyhint="done" placeholder="PIN 입력"></div><button class="btn pri" style="width:100%" onclick="submitLogin()">로그인</button><div id="loginErr" class="error"></div><button class="btn ghost" style="width:100%;margin-top:8px" onclick="renderLoginName()">← 이름 다시 입력</button><div class="meta loginTapHint39">PIN 입력칸을 눌러 숫자 키패드로 입력해주세요.</div>`;
     const pin=$('loginPin');loginInputCommon39(pin);
     pin?.addEventListener('input',()=>{const v=pin.value.replace(/\D/g,'').slice(0,8);if(pin.value!==v)pin.value=v});
     pin?.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.isComposing){e.preventDefault();submitLogin()}});
-    // Do not programmatically focus after DOM replacement. Samsung Keyboard/PWA can show a keyboard
-    // whose input connection is not ready when focus is forced asynchronously.
+    // Samsung Keyboard/PWA: don't force asynchronous focus after replacing the DOM.
   }catch(e){if(err)err.textContent=e.message}
 };
 
@@ -46,17 +44,17 @@ function decorateQueueGender39(){
     if(card.querySelector('.genderMini39'))return;
     const m=M(q[i]);if(!m)return;
     const ord=card.querySelector('.ord');
-    if(ord)ord.insertAdjacentHTML('afterend',`<span class="genderMini39 ${genderClass39(m)}"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="4"></circle><path d="M4.5 21c.5-5 3.2-8 7.5-8s7 3 7.5 8z"></path></svg></span>`);
+    if(ord)ord.insertAdjacentHTML('afterend',`<span class="genderMini39 ${genderClass39(m)}" aria-label="${genderSymbol39(m)}성"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="4"></circle><path d="M4.5 21c.5-5 3.2-8 7.5-8s7 3 7.5 8z"></path></svg></span>`);
   });
   const selected=Array.isArray(draft)?draft:[];
-  [...box.querySelectorAll('.composer .slot.filled')].forEach((slot,i)=>{
-    const name=slot.querySelector('.slotName');const m=M(selected[i]);
+  [...box.querySelectorAll('.composer .slot')].forEach((slot,i)=>{
+    const name=slot.querySelector('.slotName'),m=M(selected[i]);
     if(name&&m&&!name.querySelector('.genderInline39'))name.insertAdjacentHTML('afterbegin',genderInline39(m)+' ');
   });
   [...box.querySelectorAll('.pendingCard')].forEach((card,gi)=>{
     const pg=S.pendingGames?.[gi];if(!pg)return;
     [...card.querySelectorAll('.pendingSlot:not(.emptySlot)')].forEach((slot,pi)=>{
-      const name=slot.querySelector('.slotName');const m=M(pg.players?.[pi]);
+      const name=slot.querySelector('.slotName'),m=M(pg.players?.[pi]);
       if(name&&m&&!name.querySelector('.genderInline39'))name.insertAdjacentHTML('afterbegin',genderInline39(m)+' ');
     });
   });
@@ -72,5 +70,5 @@ renderSettings=function(){
   [...box.querySelectorAll('.meta')].forEach(el=>{if((el.textContent||'').includes('콕매치 v38'))el.textContent='콕매치 v39 · 갤럭시 로그인 입력 안정화 · 남녀 표시 강화'});
 };
 
-if(me)renderAll();
+if(!T)renderLoginName();else if(me)renderAll();
 })();
