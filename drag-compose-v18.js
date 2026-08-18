@@ -1,11 +1,20 @@
 (()=>{
-const APP_VERSION='20';
-if(window.__kokmatchMobileV20Loading)return;
-window.__kokmatchMobileV20Loading=true;
-const s=document.createElement('script');
-s.src='/mobile-compose-v20.js?v=20';
-s.async=false;
-s.onload=()=>{document.documentElement.dataset.kokmatchVersion=APP_VERSION;window.__kokmatchMobileV20Loaded=true};
-s.onerror=()=>{window.__kokmatchMobileV20Loading=false;console.error('콕매치 v20 모듈을 불러오지 못했습니다.')};
-document.body.appendChild(s);
+const path=location.pathname;
+if(path.startsWith('/versions/v20/')){
+  const s=document.createElement('script');
+  s.src='/versions/v20/mobile-compose-v20.js?v=20';
+  s.async=false;
+  document.body.appendChild(s);
+  return;
+}
+const base=document.createElement('script');
+base.src='/mobile-compose-v20.js?v=20';
+base.async=false;
+base.onload=()=>{
+  const next=document.createElement('script');
+  next.src='/mobile-compose-v21.js?v=21';
+  next.async=false;
+  document.body.appendChild(next);
+};
+document.body.appendChild(base);
 })();
