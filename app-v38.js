@@ -9,7 +9,7 @@ renderSettings=function(){
 
 async function leaveForUpdater38(from='v38'){
   try{
-    if(me?.globalAdmin&&T){
+    if(T){
       await fetch(UPDATER+'?api=logout_all&t='+Date.now(),{method:'POST',headers:{authorization:'Bearer '+T},cache:'no-store'}).catch(()=>null);
     }
   }catch(e){}
