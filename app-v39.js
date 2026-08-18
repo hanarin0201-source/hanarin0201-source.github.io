@@ -18,6 +18,10 @@ startLogin=async function(){
   const name=$('loginName')?.value.trim()||'';
   const err=$('loginErr');if(err)err.textContent='';
   if(!name){if(err)err.textContent='이름을 입력해주세요.';return}
+  // End the Korean IME connection before replacing the name field with the PIN field.
+  // On Galaxy installed-PWA environments, switching keyboard layouts while the old input
+  // still owns focus can leave the Samsung Keyboard visible but not connected to the PIN input.
+  if(document.activeElement instanceof HTMLElement)document.activeElement.blur();
   try{
     const x=await request('login_probe','POST',{name});pendingLoginName=name;
     const box=$('loginBox');if(!box)return;
@@ -25,7 +29,7 @@ startLogin=async function(){
     const pin=$('loginPin');loginInputCommon39(pin);
     pin?.addEventListener('input',()=>{const v=pin.value.replace(/\D/g,'').slice(0,8);if(pin.value!==v)pin.value=v});
     pin?.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.isComposing){e.preventDefault();submitLogin()}});
-    // Samsung Keyboard/PWA: don't force asynchronous focus after replacing the DOM.
+    // Do not automatically focus PIN. User tap creates a clean Android input connection.
   }catch(e){if(err)err.textContent=e.message}
 };
 
