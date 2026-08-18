@@ -1,0 +1,27 @@
+name: Bump Kokmatch loader to v31
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bump loader cache key
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8').replace('/drag-compose-v18.js?v=30','/drag-compose-v18.js?v=31')
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Commit if needed
+        run: |
+          if git diff --quiet -- index.html; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Bump app loader cache key to v31"
+          git push
