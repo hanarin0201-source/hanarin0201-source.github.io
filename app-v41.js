@@ -29,5 +29,11 @@ forceUpdateApp=async function(){
 };
 
 if(location.pathname.startsWith('/launch/v41'))history.replaceState(null,'','/?loaded=41');
+if(!location.pathname.startsWith('/versions/')&&/\bv41\b/i.test(document.title)){
+  fetch(UPDATER_V41+'?api=version&t='+Date.now(),{cache:'no-store'})
+    .then(r=>r.ok?r.json():null)
+    .then(x=>{if(Number(x?.version||0)>41)setTimeout(()=>forceUpdateApp(),120)})
+    .catch(()=>{});
+}
 if(me)renderAll();
 })();
