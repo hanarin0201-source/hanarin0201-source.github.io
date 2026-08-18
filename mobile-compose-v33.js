@@ -48,6 +48,10 @@ window.saveMember=async function(){
  }
 };
 
+function organizerNote33(){
+ if(me?.role==='organizer'&&$('memberNote'))$('memberNote').innerHTML='게임편성자는 <b>일반회원 등록·수정·삭제</b>와 <b>게스트 신규등록</b>, 코트 설정, 입장상태 관리와 게임편성이 가능합니다. 기존 게스트 수정·삭제와 역할/PIN 설정은 총관리자 전용입니다.'
+}
+
 function version33(){
  const card=$('appVersionCard');if(!card)return;
  const archive=isAdmin()?'<a class="btn ghost archiveAdmin24" href="/versions/">구버전 보기</a>':'';
@@ -55,6 +59,6 @@ function version33(){
 }
 
 const renderBefore33=render;
-render=function(){renderBefore33();version33()};
+render=function(){renderBefore33();organizerNote33();version33()};
 render();
 })();
