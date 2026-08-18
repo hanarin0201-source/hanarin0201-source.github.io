@@ -1,5 +1,5 @@
-const CACHE='kokmatch-v41';
-const ASSETS=['/manifest.webmanifest','/app-v35.css?v=35','/app-v35.js?v=35','/app-v36.css?v=36','/app-v36.js?v=36','/app-v37.css?v=37','/app-v37.js?v=37','/app-v38.js?v=38','/app-v39.css?v=39','/app-v39.js?v=39','/app-v40.js?v=40','/app-v41.js?v=41'];
+const CACHE='kokmatch-v42';
+const ASSETS=['/manifest.webmanifest','/app-v35.css?v=35','/app-v35.js?v=35','/app-v36.css?v=36','/app-v36.js?v=36','/app-v37.css?v=37','/app-v37.js?v=37','/app-v38.js?v=38','/app-v39.css?v=39','/app-v39.js?v=39','/app-v40.js?v=40','/app-v41.js?v=41','/app-v42.js?v=42'];
 self.addEventListener('install',e=>{self.skipWaiting();e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)))});
 self.addEventListener('activate',e=>{e.waitUntil((async()=>{const keys=await caches.keys();await Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)));await self.clients.claim()})())});
 self.addEventListener('fetch',e=>{
