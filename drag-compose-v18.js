@@ -16,7 +16,8 @@ function load29(next){load('/mobile-compose-v29.js?v=29',next)}
 function load30(next){load('/mobile-compose-v30.js?v=30',next)}
 function load31(next){load('/mobile-compose-v31.js?v=31',next)}
 function load32(next){load('/mobile-compose-v32.js?v=32',next)}
-function load33(){load('/mobile-compose-v33.js?v=33')}
+function load33(next){load('/mobile-compose-v33.js?v=33',next)}
+function load34(){load('/mobile-compose-v34.js?v=34')}
 async function allowArchive(){
  document.documentElement.style.visibility='hidden';
  try{
@@ -28,7 +29,7 @@ async function allowArchive(){
   document.documentElement.style.visibility='';return true;
  }catch(e){location.replace('/?archiveDenied=1');return false}
 }
-const archiveMode=['20','21','22','23','24','25','26','27','28','29','30','31','32'].some(v=>path.startsWith('/versions/v'+v+'/'))||['20','21','22','23','24','25','26','27','28','29','30','31','32'].includes(archived);
+const archiveMode=['20','21','22','23','24','25','26','27','28','29','30','31','32','33'].some(v=>path.startsWith('/versions/v'+v+'/'))||['20','21','22','23','24','25','26','27','28','29','30','31','32','33'].includes(archived);
 if(archiveMode&&!(await allowArchive()))return;
 if(path.startsWith('/versions/v20/')||archived==='20'){load20();return}
 if(path.startsWith('/versions/v21/')||archived==='21'){load20(()=>load21());return}
@@ -43,5 +44,6 @@ if(path.startsWith('/versions/v29/')||archived==='29'){load20(()=>load21(()=>loa
 if(path.startsWith('/versions/v30/')||archived==='30'){load20(()=>load21(()=>load22(()=>load23(()=>load24(()=>load25(()=>load26(()=>load27(()=>load28(()=>load29(()=>load30()))))))))));return}
 if(path.startsWith('/versions/v31/')||archived==='31'){load20(()=>load21(()=>load22(()=>load23(()=>load24(()=>load25(()=>load26(()=>load27(()=>load28(()=>load29(()=>load30(()=>load31())))))))))));return}
 if(path.startsWith('/versions/v32/')||archived==='32'){load20(()=>load21(()=>load22(()=>load23(()=>load24(()=>load25(()=>load26(()=>load27(()=>load28(()=>load29(()=>load30(()=>load31(()=>load32()))))))))))));return}
-load20(()=>load21(()=>load22(()=>load23(()=>load24(()=>load25(()=>load26(()=>load27(()=>load28(()=>load29(()=>load30(()=>load31(()=>load32(()=>load33())))))))))))));
+if(path.startsWith('/versions/v33/')||archived==='33'){load20(()=>load21(()=>load22(()=>load23(()=>load24(()=>load25(()=>load26(()=>load27(()=>load28(()=>load29(()=>load30(()=>load31(()=>load32(()=>load33())))))))))))));return}
+load20(()=>load21(()=>load22(()=>load23(()=>load24(()=>load25(()=>load26(()=>load27(()=>load28(()=>load29(()=>load30(()=>load31(()=>load32(()=>load33(()=>load34()))))))))))))));
 })();
