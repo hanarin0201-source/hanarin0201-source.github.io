@@ -8,7 +8,7 @@ function load21(next){load('/mobile-compose-v21.js?v=21',next)}
 function load22(next){load('/mobile-compose-v22.js?v=22',next)}
 function load23(next){load('/mobile-compose-v23.js?v=23',next)}
 function load24(next){load('/mobile-compose-v24.js?v=24',next)}
-function load25(){load('/mobile-compose-v25.js?v=25')}
+function load25(){load('/mobile-compose-v25.js?v=25',()=>load('/mobile-compose-v25-fix.js?v=25'))}
 async function allowArchive(){
  document.documentElement.style.visibility='hidden';
  try{
