@@ -105,6 +105,6 @@ async function confirmReset(){const pin=$('resetPin').value.trim();$('resetError
 function openM(id){$(id).classList.add('on')}function closeM(id){$(id).classList.remove('on')}
 document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m&&m.id!=='entryModal')closeM(m.id)}));$('loginName').addEventListener('keydown',e=>{if(e.key==='Enter')startLogin()});$('loginPin').addEventListener('keydown',e=>{if(e.key==='Enter')verifyPin()});$('resetPin').addEventListener('keydown',e=>{if(e.key==='Enter')confirmReset()});$('cc').addEventListener('input',()=>{courtCountDirty=true});$('cc').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();setCourts()}});$('mr').addEventListener('change',syncMemberPin);$('mt').addEventListener('change',syncMemberPin);if('serviceWorker'in navigator)navigator.serviceWorker.register('/sw.js').catch(()=>{});boot();setInterval(()=>{if(T)load().catch(()=>{})},3000);setInterval(render,60000);
 </script>
-<script src="/drag-compose-v18.js?v=33"></script>
+<script src="/drag-compose-v18.js?v=34"></script>
 </body>
 </html>
