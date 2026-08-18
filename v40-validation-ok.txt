@@ -1,0 +1,1 @@
+v40 syntax, updater, launcher and reset validation passed
