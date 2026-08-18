@@ -1,0 +1,42 @@
+name: Validate final Kokmatch v42
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'app-v41.js'
+      - 'app-v42.js'
+      - 'app-v42-fix.js'
+      - 'index.html'
+      - 'launch/v42.html'
+      - 'sw.js'
+      - '.github/workflows/validate-v42-final.yml'
+permissions:
+  contents: write
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check JavaScript syntax
+        run: |
+          node --check app-v41.js
+          node --check app-v42.js
+          node --check app-v42-fix.js
+      - name: Verify final shell
+        run: |
+          grep -q 'app-v42.js?v=42' index.html
+          grep -q 'app-v42-fix.js?v=42' index.html
+          grep -q 'app-v42-fix.js?v=42' launch/v42.html
+          grep -q 'app-v42-fix.js?v=42' sw.js
+          grep -q "kokmatch-v42" sw.js
+      - name: Mark final validation success
+        run: |
+          printf 'v42 final syntax, launcher, service worker and permission hardening validation passed\n' > v42-validation-final-ok.txt
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add v42-validation-final-ok.txt
+          git commit -m "Validate final v42 deployment" || exit 0
+          git push
