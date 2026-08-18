@@ -1,5 +1,7 @@
-const CACHE='kokmatch-v16';
-const ASSETS=['/','/index.html','/manifest.webmanifest'];
+const CACHE='kokmatch-v17';
+const ASSETS=['/','/index.html','/manifest.webmanifest','/drag-compose-v17.js'];
+const COMPOSER='<script src="/drag-compose-v17.js?v=17"></script>';
+async function injectComposer(r){if(!r)return r;const html=await r.text();const body=html.includes('drag-compose-v17.js')?html:html.replace('</body>',COMPOSER+'</body>');const headers=new Headers(r.headers);headers.set('content-type','text/html; charset=utf-8');headers.set('cache-control','no-cache');return new Response(body,{status:r.status,statusText:r.statusText,headers})}
 self.addEventListener('install',e=>{self.skipWaiting();e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)))});
 self.addEventListener('activate',e=>{e.waitUntil(Promise.all([self.clients.claim(),caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k))))]))});
-self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return;e.respondWith(fetch(e.request).then(r=>{const clone=r.clone();caches.open(CACHE).then(c=>c.put(e.request,clone));return r}).catch(()=>caches.match(e.request).then(r=>r||caches.match('/index.html'))))});
+self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return;if(e.request.mode==='navigate'){e.respondWith(fetch(e.request).then(r=>{const clone=r.clone();caches.open(CACHE).then(c=>c.put('/index.html',clone));return injectComposer(r)}).catch(async()=>injectComposer(await caches.match('/index.html'))));return}e.respondWith(fetch(e.request).then(r=>{const clone=r.clone();caches.open(CACHE).then(c=>c.put(e.request,clone));return r}).catch(()=>caches.match(e.request).then(r=>r||caches.match('/index.html'))))});
