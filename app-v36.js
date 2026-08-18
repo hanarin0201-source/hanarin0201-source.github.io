@@ -47,14 +47,19 @@ forceUpdateApp=async function(){
   try{
     const r=await fetch(ADMIN_V36,{method:'POST',headers:{'content-type':'application/json','authorization':'Bearer '+T},body:JSON.stringify({action:'refresh_all'}),cache:'no-store'});
     const x=await r.json().catch(()=>({}));if(!r.ok)throw new Error(x.error||'전체 이용자 최신화에 실패했습니다.');
-    if('caches'in window){const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)))}
-    if('serviceWorker'in navigator){const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.unregister().catch(()=>{})))}
-    await fetch('/index.html?refresh='+Date.now(),{cache:'no-store'}).catch(()=>null);
-    location.replace('/?refresh='+Date.now());
+    location.replace('/refresh.html?from=v36&t='+Date.now());
   }catch(e){if(b){b.disabled=false;b.textContent='↻ 최신 버전으로 새로고침'}showError(e)}
 };
 
 const renderAll35=renderAll;
 renderAll=function(){renderAll35();};
 if(me)renderAll();
+
+// Rescue old v36 app shells that are stuck in iOS/PWA cache.
+if((location.pathname==='/'||location.pathname==='/index.html')&&/\bv36\b/i.test(document.title)){
+  fetch('/latest-version.json?t='+Date.now(),{cache:'no-store'})
+    .then(r=>r.ok?r.json():null)
+    .then(x=>{if(Number(x?.version||0)>36)location.replace('/refresh.html?stuck=v36&t='+Date.now())})
+    .catch(()=>{});
+}
 })();
