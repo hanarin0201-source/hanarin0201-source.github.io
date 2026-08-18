@@ -12,7 +12,8 @@ function load25(next){load('/mobile-compose-v25.js?v=25',()=>load('/mobile-compo
 function load26(next){load('/mobile-compose-v26.js?v=26',next)}
 function load27(next){load('/mobile-compose-v27.js?v=27',next)}
 function load28(next){load('/mobile-compose-v28.js?v=28',next)}
-function load29(){load('/mobile-compose-v29.js?v=29')}
+function load29(next){load('/mobile-compose-v29.js?v=29',next)}
+function load30(){load('/mobile-compose-v30.js?v=30')}
 async function allowArchive(){
  document.documentElement.style.visibility='hidden';
  try{
@@ -22,9 +23,9 @@ async function allowArchive(){
   const x=await r.json();
   if(!r.ok||x?.user?.role!=='admin')throw new Error('not admin');
   document.documentElement.style.visibility='';return true;
- }catch(e){location.replace('/?v=29&archiveDenied=1');return false}
+ }catch(e){location.replace('/?archiveDenied=1');return false}
 }
-const archiveMode=['20','21','22','23','24','25','26','27','28'].some(v=>path.startsWith('/versions/v'+v+'/'))||['20','21','22','23','24','25','26','27','28'].includes(archived);
+const archiveMode=['20','21','22','23','24','25','26','27','28','29'].some(v=>path.startsWith('/versions/v'+v+'/'))||['20','21','22','23','24','25','26','27','28','29'].includes(archived);
 if(archiveMode&&!(await allowArchive()))return;
 if(path.startsWith('/versions/v20/')||archived==='20'){load20();return}
 if(path.startsWith('/versions/v21/')||archived==='21'){load20(()=>load21());return}
@@ -35,5 +36,6 @@ if(path.startsWith('/versions/v25/')||archived==='25'){load20(()=>load21(()=>loa
 if(path.startsWith('/versions/v26/')||archived==='26'){load20(()=>load21(()=>load22(()=>load23(()=>load24(()=>load25(()=>load26()))))));return}
 if(path.startsWith('/versions/v27/')||archived==='27'){load20(()=>load21(()=>load22(()=>load23(()=>load24(()=>load25(()=>load26(()=>load27())))))));return}
 if(path.startsWith('/versions/v28/')||archived==='28'){load20(()=>load21(()=>load22(()=>load23(()=>load24(()=>load25(()=>load26(()=>load27(()=>load28()))))))));return}
-load20(()=>load21(()=>load22(()=>load23(()=>load24(()=>load25(()=>load26(()=>load27(()=>load28(()=>load29())))))))));
+if(path.startsWith('/versions/v29/')||archived==='29'){load20(()=>load21(()=>load22(()=>load23(()=>load24(()=>load25(()=>load26(()=>load27(()=>load28(()=>load29())))))))));return}
+load20(()=>load21(()=>load22(()=>load23(()=>load24(()=>load25(()=>load26(()=>load27(()=>load28(()=>load29(()=>load30()))))))))));
 })();
