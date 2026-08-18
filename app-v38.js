@@ -24,9 +24,9 @@ forceUpdateApp=async function(){
   await leaveForUpdater38('button-v38');
 };
 
-// v38/v39처럼 오래된 앱 셸이 다시 실행되면 버튼을 누르지 않아도 최신 운영본으로 탈출한다.
+// v38~v40 구버전 앱 셸이 다시 실행되면 버튼을 누르지 않아도 최신 운영본으로 탈출한다.
 const shellVersion=Number((document.title.match(/v(\d+)/i)||[])[1]||0);
-if(shellVersion>0&&shellVersion<=39){
+if(shellVersion>0&&shellVersion<=40){
   fetch(UPDATER+'?api=version&t='+Date.now(),{cache:'no-store'})
     .then(r=>r.ok?r.json():null)
     .then(x=>{if(Number(x?.version||0)>shellVersion)setTimeout(()=>leaveForUpdater38('auto-v'+shellVersion),80)})
