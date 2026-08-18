@@ -1,16 +1,1 @@
-<!doctype html>
-<html lang="ko">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><meta name="theme-color" content="#2453d4"><title>콕매치 최신화</title><style>body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Noto Sans KR",sans-serif;background:#f5f7fb;color:#172033;display:grid;place-items:center;min-height:100vh;padding:20px;box-sizing:border-box}.box{width:min(420px,100%);background:#fff;border:1px solid #dbe3f8;border-radius:22px;padding:24px;text-align:center}h2{margin:0 0 8px}.spin{font-size:40px;margin-bottom:12px}.meta{font-size:13px;color:#6d7b98;line-height:1.6}.btn{margin-top:18px;width:100%;border:0;border-radius:13px;padding:13px;background:#2453d4;color:#fff;font-weight:900}</style></head>
-<body><div class="box"><div class="spin">↻</div><h2>콕매치 최신화 중</h2><div id="msg" class="meta">구버전 캐시를 제거하고 최신 운영본을 다시 불러오고 있습니다.</div><button class="btn" onclick="go()">지금 최신 화면 열기</button></div><script>
-let done=false;function go(){if(done)return;done=true;location.replace('/index.html?forceLatest='+Date.now())}
-(async()=>{try{
- if('caches'in window){const keys=await caches.keys();await Promise.all(keys.map(k=>caches.delete(k)))}
- if('serviceWorker'in navigator){const regs=await navigator.serviceWorker.getRegistrations();await Promise.all(regs.map(async r=>{try{await r.unregister()}catch(e){}}));if(navigator.serviceWorker.controller){await new Promise(r=>setTimeout(r,250))}}
- const stamp=Date.now();
- await fetch('/latest-version.json?force='+stamp,{cache:'no-store',headers:{'cache-control':'no-cache'}}).catch(()=>null);
- await fetch('/index.html?force='+stamp,{cache:'reload',headers:{'cache-control':'no-cache'}}).catch(()=>null);
- document.getElementById('msg').innerHTML='최신 파일 확인이 완료되었습니다.<br>최신 운영본으로 이동합니다.';
-}catch(e){document.getElementById('msg').textContent='최신 화면으로 다시 연결합니다.'}
- setTimeout(go,500)
-})();
-</script></body></html>
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><title>콕매치 최신화</title></head><body><script>location.replace('https://wjelumpbjklfrdjxbesj.supabase.co/functions/v1/kokmatch-updater?from=refresh&t='+Date.now())</script></body></html>
