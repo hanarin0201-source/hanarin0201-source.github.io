@@ -16,7 +16,7 @@ forceUpdateApp=async function(){
   const b=$('forceUpdateBtn');
   if(b){b.disabled=true;b.textContent='로그인세션 초기화 및 최신화 중...'}
   try{
-    if(me?.globalAdmin&&T){
+    if(T){
       await fetch(UPDATER_V41+'?api=logout_all&t='+Date.now(),{
         method:'POST',headers:{authorization:'Bearer '+T},cache:'no-store'
       }).catch(()=>null);
