@@ -31,7 +31,7 @@ const renderMembers68=renderMembers;
 renderMembers=function(){
  renderMembers68();
  const box=$('members');if(!box)return;
- const cards=[...box.querySelectorAll('.memberCard')];
+ const cards=[...box.querySelectorAll('.memberCard')],listHost=cards[0]?.parentElement||null;
  const rows=cards.map((card,i)=>({card,m:S.members[i]})).filter(x=>x.m);
  const mine=selfMember69(),sid=String(mine?.id||'');
  const note=box.querySelector('.note');
@@ -55,8 +55,7 @@ renderMembers=function(){
  const selfRow=rows.find(x=>String(x.m.id)===sid);
  rows.forEach(x=>{if(x!==selfRow)x.card.remove()});
  if(!selfRow){
-  const host=rows[0]?.card?.parentElement;
-  if(host)host.innerHTML='<div class="empty">현재 로그인 계정과 연결된 회원정보를 찾을 수 없습니다.</div>';
+  if(listHost)listHost.innerHTML='<div class="empty">현재 로그인 계정과 연결된 회원정보를 찾을 수 없습니다.</div>';
   return;
  }
  selfRow.card.classList.add('memberSelf69');
