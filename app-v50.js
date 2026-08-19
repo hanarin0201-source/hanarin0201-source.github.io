@@ -13,10 +13,11 @@ function shuttleBadge50(kind,label){
  const glossy=kind==='global'||kind==='manager';
  return `<span class="roleShuttle50 role-${kind}50${glossy?' glossy50':' matte50'}" title="${esc(label)}" aria-label="${esc(label)}">${shuttleSvg50(kind)}</span>`;
 }
+function canSeeGlobal50(){const mode=String(S?.adminBadgeVisibility||'all');if(me?.globalAdmin)return true;if(mode==='all')return true;if(mode==='staff')return me?.role==='manager'||me?.role==='organizer';return false}
 roleBadge=function(m){
  const r=roleOf(m),prior=roleBadge49(m);
  const globalLike=r==='admin'||(me?.globalAdmin&&m?.name===me.displayName);
- if(globalLike){if(!prior)return '';return shuttleBadge50('global','총관리자')}
+ if(globalLike){if(!canSeeGlobal50())return '';return shuttleBadge50('global','총관리자')}
  if(r==='manager')return shuttleBadge50('manager','모임관리자');
  if(r==='organizer')return shuttleBadge50('organizer','게임편성자');
  if(isTemp(m))return shuttleBadge50('temp','임시편성자');
