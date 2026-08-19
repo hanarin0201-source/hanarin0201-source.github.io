@@ -33,12 +33,12 @@
   width:100%!important;
   justify-content:end!important;
  }
- .memberCard57 .memberBtnSlot61,
- .memberCard57 .memberBtnSlot61 .btn,
- .memberCard57 .memberBtnPlaceholder61{
+ .memberCard57 .memberBtns61 .memberBtnSlot61,
+ .memberCard57 .memberBtns61 .memberBtnSlot61 .btn,
+ .memberCard57 .memberBtns61 .memberBtnPlaceholder61{
   width:32px!important;min-width:32px!important;max-width:32px!important;height:30px!important
  }
- .memberCard57 .memberBtnSlot61 .btn{padding:4px 1px!important;font-size:8px!important;line-height:1!important;border-radius:8px!important;white-space:nowrap!important}
+ .memberCard57 .memberBtns61 .memberBtnSlot61 .btn{padding:4px 1px!important;font-size:8px!important;line-height:1!important;border-radius:8px!important;white-space:nowrap!important}
  #queue .composer54 .slotName53 .compactName53,
  #queue .pendingSlot54 .slotName53 .compactName53{font-size:13px!important}
  #queue .composer54 .compactMeta53,
@@ -52,10 +52,10 @@
 @media(max-width:374px){
  .memberCard57{grid-template-columns:35px minmax(0,1fr) 124px!important}
  .memberCard57 .memberBtns61{grid-template-columns:repeat(4,28px)!important;gap:2px!important}
- .memberCard57 .memberBtnSlot61,
- .memberCard57 .memberBtnSlot61 .btn,
- .memberCard57 .memberBtnPlaceholder61{width:28px!important;min-width:28px!important;max-width:28px!important;height:28px!important}
- .memberCard57 .memberBtnSlot61 .btn{font-size:7.5px!important;padding:3px 0!important}
+ .memberCard57 .memberBtns61 .memberBtnSlot61,
+ .memberCard57 .memberBtns61 .memberBtnSlot61 .btn,
+ .memberCard57 .memberBtns61 .memberBtnPlaceholder61{width:28px!important;min-width:28px!important;max-width:28px!important;height:28px!important}
+ .memberCard57 .memberBtns61 .memberBtnSlot61 .btn{font-size:7.5px!important;padding:3px 0!important}
  #queue .composer54 .slotName53 .compactName53,
  #queue .pendingSlot54 .slotName53 .compactName53{font-size:12px!important}
  #playing .playingName53{font-size:11.5px!important}
@@ -65,8 +65,8 @@
 
 @media(min-width:600px){
  .memberBtns61{grid-template-columns:repeat(4,42px)!important;gap:4px!important}
- .memberBtnSlot61,.memberBtnSlot61 .btn,.memberBtnPlaceholder61{width:42px;min-width:42px;height:32px}
- .memberBtnSlot61 .btn{padding:6px 3px!important;font-size:10px!important}
+ .memberBtns61 .memberBtnSlot61,.memberBtns61 .memberBtnSlot61 .btn,.memberBtns61 .memberBtnPlaceholder61{width:42px!important;min-width:42px!important;height:32px!important}
+ .memberBtns61 .memberBtnSlot61 .btn{padding:6px 3px!important;font-size:10px!important}
  #playing .courtBody{min-height:158px}
  #playing .courtBody>.empty{min-height:136px}
 }
