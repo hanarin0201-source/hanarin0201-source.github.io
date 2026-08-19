@@ -34,7 +34,7 @@ function safeToAuto56(){
  if(document.hidden)return false;
  if(document.querySelector('#modal.on'))return false;
  if(document.activeElement&&/^(INPUT|SELECT|TEXTAREA)$/i.test(document.activeElement.tagName))return false;
- if(Array.isArray(window.draft)&&window.draft.filter(Boolean).length)return false;
+ if(Array.isArray(draft)&&draft.filter(Boolean).length)return false;
  return true;
 }
 async function checkLatest56(auto=false){
