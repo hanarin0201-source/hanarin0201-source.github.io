@@ -13,7 +13,7 @@ renderQueue=function(){renderQueue47();decorateResponsive48()};
 const renderPlaying47=renderPlaying;
 renderPlaying=function(){renderPlaying47();decorateResponsive48()};
 const renderSettings47=renderSettings;
-renderSettings=function(){renderSettings47();const box=$('settings');if(box){[...box.querySelectorAll('.meta')].forEach(el=>{if((el.textContent||'').includes('콕매치 v47'))el.textContent='콕매치 v48 · 전기기 반응형 레이아웃'})}decorateResponsive48()};
+renderSettings=function(){renderSettings47();const box=$('settings');if(box){[...box.querySelectorAll('.meta')].forEach(el=>{if((el.textContent||'').includes('콕매치 v47'))el.textContent='콕매치 v48 · 전 기기 반응형 레이아웃'})}decorateResponsive48()};
 let resize48=0;addEventListener('resize',()=>{clearTimeout(resize48);resize48=setTimeout(decorateResponsive48,80)},{passive:true});
 addEventListener('orientationchange',()=>setTimeout(decorateResponsive48,160),{passive:true});
 if(location.pathname.startsWith('/launch/v48'))history.replaceState(null,'','/?loaded=48');
