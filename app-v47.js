@@ -2,18 +2,21 @@
 const GROUPS_V47='https://wjelumpbjklfrdjxbesj.supabase.co/functions/v1/kokmatch-groups-v47';
 
 /* PC-safe pointer handling: dragging/selecting inside a modal must never count as a backdrop click. */
-let pointer47={down:false,insideSheet:false,interactive:false,x:0,y:0,dragged:false};
+let pointer47={down:false,insideSheet:false,x:0,y:0,dragged:false};
+function clearPointer47(){pointer47={down:false,insideSheet:false,x:0,y:0,dragged:false}}
 function markPointerDown47(e){
  const t=e.target instanceof Element?e.target:null;if(!t)return;
- pointer47={down:true,insideSheet:!!t.closest('#modalSheet'),interactive:!!t.closest('.queueCard,.pendingSlot,.courtCard,.choiceBtn'),x:Number(e.clientX)||0,y:Number(e.clientY)||0,dragged:false};
+ pointer47={down:true,insideSheet:!!t.closest('#modalSheet'),x:Number(e.clientX)||0,y:Number(e.clientY)||0,dragged:false};
 }
 function markPointerMove47(e){if(!pointer47.down)return;const dx=(Number(e.clientX)||0)-pointer47.x,dy=(Number(e.clientY)||0)-pointer47.y;if(Math.hypot(dx,dy)>5)pointer47.dragged=true}
-function markPointerEnd47(){setTimeout(()=>{pointer47.down=false;pointer47.insideSheet=false;pointer47.interactive=false;pointer47.dragged=false},0)}
-if(window.PointerEvent){document.addEventListener('pointerdown',markPointerDown47,true);document.addEventListener('pointermove',markPointerMove47,true);document.addEventListener('pointerup',markPointerEnd47,true)}else{document.addEventListener('mousedown',markPointerDown47,true);document.addEventListener('mousemove',markPointerMove47,true);document.addEventListener('mouseup',markPointerEnd47,true)}
+function markPointerEnd47(){setTimeout(clearPointer47,180)}
+if(window.PointerEvent){document.addEventListener('pointerdown',markPointerDown47,true);document.addEventListener('pointermove',markPointerMove47,true);document.addEventListener('pointerup',markPointerEnd47,true);document.addEventListener('pointercancel',clearPointer47,true)}else{document.addEventListener('mousedown',markPointerDown47,true);document.addEventListener('mousemove',markPointerMove47,true);document.addEventListener('mouseup',markPointerEnd47,true)}
 document.addEventListener('click',e=>{
  const t=e.target instanceof Element?e.target:null;if(!t)return;
- if(t.id==='modal'&&pointer47.insideSheet){e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();return}
- if(pointer47.dragged&&t.closest('.queueCard,.pendingSlot,.courtCard,.choiceBtn')){e.preventDefault();e.stopPropagation();e.stopImmediatePropagation()}
+ const startedInside=pointer47.insideSheet,dragged=pointer47.dragged;
+ if(t.id==='modal'&&startedInside){clearPointer47();e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();return}
+ if(dragged&&t.closest('.queueCard,.pendingSlot,.courtCard,.choiceBtn')){clearPointer47();e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();return}
+ clearPointer47();
 },true);
 
 /* Desktop keyboard conveniences without changing mobile behavior. */
