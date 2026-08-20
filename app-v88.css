@@ -2,6 +2,7 @@
 
 /* Neutralize the one-shot hidden paint from v87; v88 performs repeatable reflow instead. */
 #members.rosterPreparing87{opacity:1!important;pointer-events:auto!important}
+#members.view.on{display:block!important}
 
 /* Keep member cards on one deterministic grid at every breakpoint. */
 .memberCard57.memberCard73.memberCard71{
