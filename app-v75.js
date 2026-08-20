@@ -7,7 +7,7 @@ function safeToRefresh75(){
  if(document.hidden)return false;
  if(document.querySelector('#modal.on'))return false;
  const a=document.activeElement;if(a&&/^(INPUT|SELECT|TEXTAREA)$/i.test(a.tagName))return false;
- if(Array.isArray(window.draft)&&window.draft.filter(Boolean).length)return false;
+ if(typeof draft!=='undefined'&&Array.isArray(draft)&&draft.filter(Boolean).length)return false;
  return true;
 }
 async function latest75(){
