@@ -23,4 +23,5 @@ const oldAll98=renderAll;renderAll=function(){oldAll98();requestAnimationFrame(e
 const oldSettings98=renderSettings;renderSettings=function(){oldSettings98();const b=$('settings');if(b)[...b.querySelectorAll('.meta')].forEach(e=>{if(/콕매치 v9[0-7]/.test(e.textContent||''))e.textContent='콕매치 v98 · 게임중 레이아웃 복구 · 급수 배경농도 강화'})};
 if(location.pathname.startsWith('/launch/v98'))history.replaceState(null,'','/?loaded=98');
 if(me){renderAll();setTimeout(enhance98,40)}
+const s=document.createElement('script');s.src='/app-v99.js?v=99';s.defer=true;document.body.appendChild(s);
 })();
