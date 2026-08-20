@@ -26,13 +26,26 @@ const oldQueue99=renderQueue;renderQueue=function(){restoreDeveloper99();oldQueu
 const oldMembers99=renderMembers;renderMembers=function(){restoreDeveloper99();oldMembers99();requestAnimationFrame(()=>{restoreDeveloper99();tintAllGrades99($('members')||document)})};
 const oldHeader99=renderHeader;renderHeader=function(){restoreDeveloper99();oldHeader99()};
 const oldNav99=renderNav;renderNav=function(){restoreDeveloper99();oldNav99()};
-const oldSettings99=renderSettings;renderSettings=function(){restoreDeveloper99();oldSettings99();const b=$('settings');if(b)[...b.querySelectorAll('.meta')].forEach(e=>{if(/콕매치 v9[0-9]/.test(e.textContent||''))e.textContent='콕매치 v99 · 개발자 숨김배지 권한 지속 유지'})};
+const oldSettings99=renderSettings;renderSettings=function(){restoreDeveloper99();oldSettings99();const b=$('settings');if(b)[...b.querySelectorAll('.meta')].forEach(e=>{if(/콕매치 v9[0-9]/.test(e.textContent||''))e.textContent='콕매치 v99 · 개발자 숨김배지 권한 지속 · 회원상태 즉시반응'})};
 const oldGoView99=goView;goView=function(id){restoreDeveloper99();oldGoView99(id);requestAnimationFrame(()=>{restoreDeveloper99();if(id==='members'){renderMembers();ensureFullDeveloperRoster99()}});setTimeout(()=>{restoreDeveloper99();if(id==='members')ensureFullDeveloperRoster99()},80)};
 const oldLoadState99=loadState;loadState=async function(){await oldLoadState99();restoreDeveloper99();saveDeveloperProof99();if(currentView==='members')setTimeout(ensureFullDeveloperRoster99,0)};
 const oldAct99=act;act=async function(...args){restoreDeveloper99();const x=await oldAct99(...args);restoreDeveloper99();return x};
 addEventListener('focus',()=>{restoreDeveloper99();if(currentView==='members')setTimeout(ensureFullDeveloperRoster99,0)},{passive:true});
 document.addEventListener('visibilitychange',()=>{if(!document.hidden){restoreDeveloper99();if(currentView==='members')setTimeout(ensureFullDeveloperRoster99,0)}});
 setInterval(()=>{if(me){restoreDeveloper99();if(currentView==='members')ensureFullDeveloperRoster99()}},1200);
+
+/* Member attendance fast path: preserve scroll, avoid full roster repaint/flicker. */
+const attendanceBusy99=new Set();
+let attendanceDirty99=false;
+function textNoReflow99(el,text){if(!el)return;if(el.childNodes.length===1&&el.firstChild?.nodeType===3)el.firstChild.nodeValue=String(text);else el.innerText=String(text)}
+function memberCardFor99(id){const q=String(id);for(const card of document.querySelectorAll('#members .memberCard')){for(const el of card.querySelectorAll('[onclick]')){if((el.getAttribute('onclick')||'').includes("'"+q+"'"))return card}}return null}
+function setBtn99(btn,label,kind,id,mode){if(!btn)return;textNoReflow99(btn,label);btn.className='btn '+kind;btn.setAttribute('onclick',`setOther('${id}','${mode}')`)}
+function patchMemberState99(id){const m=M(id),card=memberCardFor99(id);if(!m||!card)return;const status=card.querySelector('.status');textNoReflow99(status,stateLabel(m.state));const wrap=card.querySelector('.memberBtns');if(!wrap)return;const acts=[...wrap.querySelectorAll('button')].filter(b=>!b.classList.contains('ghost'));if(acts.length>=2){if(m.state==='waiting'){setBtn99(acts[0],'관람','watch',id,'spectator');setBtn99(acts[1],'퇴장','danger',id,'out')}else if(m.state==='spectator'){setBtn99(acts[0],'입장','enter',id,'waiting');setBtn99(acts[1],'퇴장','danger',id,'out')}else if(m.state==='out'){setBtn99(acts[0],'입장','enter',id,'waiting');setBtn99(acts[1],'관람','watch',id,'spectator')}}for(const b of acts)b.disabled=attendanceBusy99.has(String(id))}
+function patchSummary99(){const a=$('sm'),w=$('sw'),g=$('sg');textNoReflow99(a,S.members.filter(m=>m.state!=='out').length);textNoReflow99(w,S.queue.length+S.pendingGames.reduce((n,x)=>n+(x.players?.length||0),0));textNoReflow99(g,S.games.length)}
+function optimisticAttendance99(id,mode){const m=M(id);if(!m)return;if(mode==='waiting'){m.state='waiting';m.joinedAt=Number(m.joinedAt)||Date.now();if(!S.queue.includes(id))S.queue.push(id)}else{m.state=mode;S.queue=S.queue.filter(x=>String(x)!==String(id))}patchMemberState99(id);patchSummary99()}
+setOther=async function(id,mode){id=String(id);if(attendanceBusy99.has(id))return;const m=M(id);if(!m)return;const prev={state:m.state,joinedAt:m.joinedAt,queue:S.queue.slice()};attendanceBusy99.add(id);optimisticAttendance99(id,mode);patchMemberState99(id);try{const x=await request('action','POST',{action:'set_member_attendance',groupId:currentGroupId,memberId:id,mode});if(x?.data){S=x.data;normalizeClient();restoreDeveloper99()}attendanceDirty99=true;patchMemberState99(id);patchSummary99()}catch(e){const mm=M(id);if(mm){mm.state=prev.state;mm.joinedAt=prev.joinedAt}S.queue=prev.queue;patchMemberState99(id);patchSummary99();showError(e)}finally{attendanceBusy99.delete(id);patchMemberState99(id)}};
+const goViewFast99=goView;goView=function(id){if(attendanceDirty99&&id!=='members'){attendanceDirty99=false;try{renderQueue();renderPlaying();renderStats();renderSettings()}catch{}}goViewFast99(id)};
+
 if(location.pathname.startsWith('/launch/v99'))history.replaceState(null,'','/?loaded=99');
 if(me){restoreDeveloper99();saveDeveloperProof99();renderAll();setTimeout(enhance99,40)}
 })();
