@@ -1,4 +1,5 @@
 (()=>{
+const POLL74_API='https://wjelumpbjklfrdjxbesj.supabase.co/functions/v1/kokmatch-v73-api';
 function today74(){return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date())}
 function formatJoin74(v){const s=String(v||today74());const a=s.split('-').map(Number);return a.length===3&&a[0]?`${a[0]}년 ${a[1]}월 ${a[2]}일`:s}
 function history74(m){
@@ -26,6 +27,13 @@ window.openPairs=function(id){
 
 function autoPollTitle74(date,time,location){const a=String(date||'').split('-').map(Number);if(a.length!==3||!a[1]||!a[2])return '참석투표';const place=String(location||'').trim();return `${a[1]}월 ${a[2]}일 ${time||''}${place?' '+place:''} 참석투표`}
 function timeOptions74(selected='19:00'){const out=[];for(let h=0;h<24;h++)for(const m of [0,30]){const v=`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;out.push(`<option value="${v}" ${v===selected?'selected':''}>${v}</option>`)}return out.join('')}
+async function createPollRequest74(body){
+ const r=await fetch(POLL74_API,{method:'POST',headers:{'content-type':'application/json','authorization':'Bearer '+T},body:JSON.stringify({action:'poll_create',groupId:currentGroupId,...body}),cache:'no-store'});
+ const x=await r.json().catch(()=>({}));
+ if(!r.ok){if(r.status===401){reloginLatest();throw new Error('로그인이 만료되었습니다.')}throw new Error(x.error||'투표 생성에 실패했습니다.')}
+ if(x.data){S=x.data;normalizeClient();renderAll()}
+ return x;
+}
 window.syncPollTitle74=function(force=false){const title=$('pollTitle72'),date=$('pollDate72')?.value||'',time=$('pollTime72')?.value||'',location=$('pollLocation73')?.value.trim()||'';if(!title)return;if(force||title.dataset.manual!=='1')title.value=autoPollTitle74(date,time,location)};
 window.openPollCreate72=function(){
  if(!(me?.globalAdmin||me?.role==='manager'||me?.role==='organizer'))return alert('게임편성자 이상 권한이 필요합니다.');
@@ -43,7 +51,7 @@ window.createPoll72=async function(){
  const date=$('pollDate72')?.value||'',time=$('pollTime72')?.value||'',location=$('pollLocation73')?.value.trim()||'';
  if(!date||!time)return alert('운동 일자와 시간을 선택해주세요.');if(!location)return alert('운동 장소를 입력해주세요.');
  let title=$('pollTitle72')?.value.trim()||'';if(!title)title=autoPollTitle74(date,time,location);
- try{await applyV73('poll_create',{date,time,location,title});closeModal();goView('stats')}catch(e){showError(e)}
+ try{await createPollRequest74({date,time,location,title});closeModal();goView('stats')}catch(e){showError(e)}
 };
 
 const renderSettings73=renderSettings;
