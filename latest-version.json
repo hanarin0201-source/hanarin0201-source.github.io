@@ -1,1 +1,1 @@
-{"version":103,"label":"1.1","semanticVersion":"1.1","updatedAt":"2026-08-21T09:21:00+09:00","note":"forced logout and auth recovery"}
+{"version":104,"label":"1.2","semanticVersion":"1.2","updatedAt":"2026-08-21T09:34:00+09:00","note":"stable recovery, forced logout, cache bypass"}
