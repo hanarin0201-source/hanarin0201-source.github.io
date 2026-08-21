@@ -1,1 +1,1 @@
-{"version":1,"label":"2.6","semanticVersion":"2.6","updatedAt":"2026-08-21T17:05:00+09:00","note":"pending vacancy auto-fill; fixed pending-group player moves; instant composer grade tint cleanup"}
+{"version":1,"label":"2.7","semanticVersion":"2.7","updatedAt":"2026-08-21T17:18:00+09:00","note":"optimistic pending moves and faster pointer response; stats title/recent-game cleanup; attendance poll section reordered"}
