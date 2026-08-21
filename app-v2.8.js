@@ -106,9 +106,10 @@ document.addEventListener('pointercancel',e=>{if(gesture28?.pointerId===e.pointe
 document.addEventListener('pointerup',e=>{
  const g=gesture28;if(!g||g.pointerId!==e.pointerId)return;gesture28=null;
  const moved=g.moved||Math.hypot(e.clientX-g.x,e.clientY-g.y)>TAP_MOVE28;
- if(moved||performance.now()-g.at>TAP_MAX_MS28)return;
- e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();
- suppress28={key:g.key,at:performance.now()};g.run();
+ const held=performance.now()-g.at>TAP_MAX_MS28;
+ suppress28={key:g.key,at:performance.now()};
+ if(moved||held)return;
+ e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();g.run();
 },{capture:true,passive:false});
 document.addEventListener('click',e=>{
  const a=actionFromTarget28(e.target);if(!a)return;
