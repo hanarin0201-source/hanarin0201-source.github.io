@@ -17,6 +17,8 @@ async function q27(action,body={}){
  if(!r.ok){if(r.status===401){reloginLatest();throw new Error('로그인이 만료되었습니다.')}const e=new Error(x.error||'편성대기 처리에 실패했습니다.');e.payload=x;throw e}
  return x;
 }
+const loadState26=loadState;
+loadState=async function(...args){if(busy27.size)return;return loadState26(...args)};
 function qsig27(){return JSON.stringify([(S.queue||[]).map(String),(S.pendingGames||[]).map(g=>[String(g.id),(g.players||[]).map(String)])])}
 function applyServer27(x,beforeSig){
  if(!x?.data)return;
