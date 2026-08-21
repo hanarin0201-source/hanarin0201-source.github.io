@@ -1,1 +1,1 @@
-{"version":104,"label":"1.4","semanticVersion":"1.4","updatedAt":"2026-08-21T10:08:00+09:00","note":"root-only recovery and GitHub Pages 404 fallback"}
+{"version":56,"label":"1.5","semanticVersion":"1.5","updatedAt":"2026-08-21T10:19:00+09:00","note":"disable legacy numeric auto-update loop; semantic releases only"}
