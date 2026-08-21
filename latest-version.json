@@ -1,1 +1,1 @@
-{"version":1,"label":"2.7","semanticVersion":"2.7","updatedAt":"2026-08-21T17:18:00+09:00","note":"optimistic pending moves and faster pointer response; stats title/recent-game cleanup; attendance poll section reordered"}
+{"version":1,"label":"2.8","semanticVersion":"2.8","updatedAt":"2026-08-21T17:31:00+09:00","note":"prevent queue selection while scrolling; execute queue actions only on true taps; rename Today Stats menu to Workout Stats"}
