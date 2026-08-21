@@ -1,1 +1,1 @@
-{"version":1,"label":"3.0","semanticVersion":"3.0","updatedAt":"2026-08-22T07:25:00+09:00","note":"refresh member roster on re-entry and make attendance controls optimistic and immediate"}
+{"version":1,"label":"3.1","semanticVersion":"3.1","updatedAt":"2026-08-22T07:55:00+09:00","note":"atomic multi-operator game actions, six-operator concurrency safety, no lost updates"}
