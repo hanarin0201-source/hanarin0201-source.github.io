@@ -1,1 +1,1 @@
-{"version":1,"label":"2.4","semanticVersion":"2.4","updatedAt":"2026-08-21T16:26:00+09:00","note":"instant reliable tab navigation; remove repeated roster reflows; defer group data refresh until after view switch"}
+{"version":1,"label":"2.5","semanticVersion":"2.5","updatedAt":"2026-08-21T16:35:00+09:00","note":"fix blank queue/playing views after fast navigation; pre-render hidden views; keep member navigation lightweight"}
