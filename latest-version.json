@@ -1,1 +1,1 @@
-{"version":1,"label":"2.5","semanticVersion":"2.5","updatedAt":"2026-08-21T16:35:00+09:00","note":"fix blank queue/playing views after fast navigation; pre-render hidden views; keep member navigation lightweight"}
+{"version":1,"label":"2.6","semanticVersion":"2.6","updatedAt":"2026-08-21T17:05:00+09:00","note":"pending vacancy auto-fill; fixed pending-group player moves; instant composer grade tint cleanup"}
