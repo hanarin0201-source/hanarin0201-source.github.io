@@ -28,7 +28,7 @@ function ensureView25(v){
  renderView25(v);
 }
 function refreshAfterSwitch25(v){
- if(v==='groups')return;
+ if(v==='groups'||v==='members')return;
  requestAnimationFrame(()=>{
   if(currentView!==v)return;
   renderView25(v);
