@@ -72,7 +72,8 @@ window.removePollGuest72=async function(pid,gid){
 
 window.openPollAttendees18=function(id){
  const p=poll18(id);if(!p)return;
- const members=attendeeMembers18(p).sort((a,b)=>attendeeRank18(a)-attendeeRank18(b)||String(a.name||'').localeCompare(String(b.name||''),'ko'));
+ const order=new Map((S.members||[]).map((m,i)=>[String(m.id),i]));
+ const members=attendeeMembers18(p).sort((a,b)=>attendeeRank18(a)-attendeeRank18(b)||(order.get(String(a.id))??99999)-(order.get(String(b.id))??99999));
  const guests=guestEntries18(p).slice().sort((a,b)=>String(a.name||'').localeCompare(String(b.name||''),'ko'));
  const total=members.length+guests.length;
  const memberRows=members.map(m=>`<div class="pollMember72">${gender18(m)}<span class="pollName72">${esc(m.name)}</span><span class="tag">${esc(m.cls||'C')}</span>${roleBadge(m)}</div>`).join('');
@@ -100,20 +101,17 @@ function patchPollCounts18(){
 const renderStatsBefore18=renderStats;
 renderStats=function(){renderStatsBefore18();patchPollCounts18()};
 
-/* iPhone/tablet member search: filter the already-rendered cards; never replace the input while typing. */
+/* iPhone/tablet member search: detach all legacy IME listeners and filter existing cards without re-rendering. */
 function memberCardText18(card){return String(card?.textContent||'').toLowerCase()}
 function applyMemberSearch18(v){
  const box=$('members');if(!box)return;const q=String(v||'').trim().toLowerCase();let shown=0,total=0;
  box.querySelectorAll('.memberCard').forEach(card=>{total++;const on=!q||memberCardText18(card).includes(q);card.classList.toggle('searchHidden18',!on);if(on)shown++});
  const search=box.querySelector('.memberSearch46 .meta');if(search)search.textContent=q?`현재 화면 검색 ${shown}명 / ${total}명`:`현재 화면 ${total}명`;
 }
-window.searchMembers46=function(v){
- clearTimeout(searchTimer18);const input=$('memberSearchInput46');const value=String(v??input?.value??'');
- if(searchComposing18)return;
- searchTimer18=setTimeout(()=>applyMemberSearch18(value),60);
-};
+window.searchMembers46=function(v){clearTimeout(searchTimer18);const input=$('memberSearchInput46'),value=String(v??input?.value??'');if(searchComposing18)return;searchTimer18=setTimeout(()=>applyMemberSearch18(value),60)};
 function bindMemberSearch18(){
- const input=$('memberSearchInput46');if(!input||input.dataset.v18==='1')return;input.dataset.v18='1';input.removeAttribute('oninput');input.autocomplete='off';input.spellcheck=false;
+ let input=$('memberSearchInput46');if(!input||input.dataset.v18==='1')return;
+ const clone=input.cloneNode(true);clone.dataset.v18='1';clone.removeAttribute('oninput');clone.removeAttribute('data-ime17');clone.autocomplete='off';clone.spellcheck=false;input.replaceWith(clone);input=clone;
  input.addEventListener('compositionstart',()=>{searchComposing18=true;clearTimeout(searchTimer18)});
  input.addEventListener('compositionend',()=>{searchComposing18=false;applyMemberSearch18(input.value)});
  input.addEventListener('input',e=>{if(e.isComposing||searchComposing18)return;clearTimeout(searchTimer18);searchTimer18=setTimeout(()=>applyMemberSearch18(input.value),60)});
