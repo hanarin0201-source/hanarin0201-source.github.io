@@ -1,1 +1,1 @@
-{"version":1,"label":"2.3","semanticVersion":"2.3","updatedAt":"2026-08-21T16:06:00+09:00","note":"instant composer gender icon; reject past polls; weekend and holiday calendar colors; mobile poll form width fix"}
+{"version":1,"label":"2.4","semanticVersion":"2.4","updatedAt":"2026-08-21T16:26:00+09:00","note":"instant reliable tab navigation; remove repeated roster reflows; defer group data refresh until after view switch"}
