@@ -1,1 +1,1 @@
-{"version":56,"label":"1.5","semanticVersion":"1.5","updatedAt":"2026-08-21T10:19:00+09:00","note":"disable legacy numeric auto-update loop; semantic releases only"}
+{"version":1,"label":"1.6","semanticVersion":"1.6","updatedAt":"2026-08-21T10:29:00+09:00","note":"legacy auto-update disabled; updater default returns 204; inline session recovery"}
